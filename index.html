@@ -24,14 +24,11 @@
     color: var(--deep-plum);
     font-family: 'Jost', sans-serif;
     font-weight: 300;
-    min-height: 100vh;
+    line-height: 1.6;
   }
 
-  h1, h2, .section-title { font-family: 'Yeseva One', serif; font-weight: 400; }
-  .eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500; color: var(--mauve-primary); }
-
-  .progress-wrap { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 4px; background: var(--honey-cream); }
-  .progress-bar { height: 100%; background: var(--mauve-primary); width: 0%; transition: width 0.4s ease; }
+  h1, h2, h3, .section-title { font-family: 'Yeseva One', serif; font-weight: 400; color: var(--deep-plum); }
+  .eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500; color: var(--mauve-primary); display: block; margin-bottom: 8px; }
 
   .site-header {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -39,161 +36,149 @@
     background: rgba(250, 243, 232, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--golden-sand);
   }
 
-  .logo { font-family: 'Yeseva One', serif; font-size: 18px; color: var(--deep-plum); }
+  .logo { font-family: 'Yeseva One', serif; font-size: 20px; color: var(--deep-plum); }
 
   .hero {
-    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 120px 24px; background: radial-gradient(circle at center, #FFFDF9 0%, var(--warm-cream-bg) 100%);
+    min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 140px 24px 60px;
+    background: radial-gradient(circle at center, #FFFDF9 0%, var(--warm-cream-bg) 100%);
   }
 
-  .hero h1 { font-size: clamp(42px, 8vw, 76px); line-height: 1.1; margin: 20px 0; }
+  .hero h1 { font-size: clamp(40px, 7vw, 70px); line-height: 1.1; margin: 20px 0; }
   .hero h1 em { font-style: italic; color: var(--mauve-primary); font-family: inherit; }
 
-  .form-container { display: none; max-width: 760px; margin: 0 auto; padding: 140px 24px 100px; }
-  .form-container.active { display: block; }
+  .form-wrapper { max-width: 800px; margin: 0 auto; padding: 40px 24px 120px; }
+  .section-block { margin-bottom: 100px; border-top: 1px solid var(--golden-sand); padding-top: 40px; }
 
-  .field-group { margin-bottom: 40px; }
-  label { display: block; margin-bottom: 12px; font-weight: 500; color: var(--deep-plum); }
+  .field-group { margin-bottom: 45px; }
+  label { display: block; margin-bottom: 14px; font-weight: 500; font-size: 17px; }
+  .label-subtext { display: block; font-size: 14px; color: var(--muted-plum); margin-top: -10px; margin-bottom: 15px; font-style: italic; }
 
-  input, textarea, select {
+  input, textarea {
     width: 100%; background: var(--off-white-surface); border: 1px solid var(--golden-sand);
-    padding: 18px; font-family: 'Jost', sans-serif; font-size: 16px; outline: none; transition: 0.3s;
+    padding: 20px; font-family: 'Jost', sans-serif; font-size: 16px; outline: none; transition: all 0.3s ease;
   }
 
-  input:focus, textarea:focus { border-color: var(--mauve-primary); background: #FFF; box-shadow: 0 4px 20px rgba(166, 117, 132, 0.08); }
+  input:focus, textarea:focus { border-color: var(--mauve-primary); background: #FFF; box-shadow: 0 5px 25px rgba(166, 117, 132, 0.08); }
 
-  .btn-primary {
-    padding: 18px 44px; background: var(--mauve-primary); color: #FFF;
-    font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500;
-    letter-spacing: 0.2em; text-transform: uppercase; border: none; cursor: pointer; transition: 0.3s;
+  .btn-submit {
+    width: 100%; padding: 22px; background: var(--mauve-primary); color: #FFF;
+    font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500;
+    letter-spacing: 0.25em; text-transform: uppercase; border: none; cursor: pointer; transition: 0.4s ease;
   }
 
-  .btn-primary:hover:not(:disabled) { background: var(--dusty-rose); transform: translateY(-2px); }
-  .error-text { color: #842029; font-size: 12px; margin-top: 5px; }
+  .btn-submit:hover:not(:disabled) { background: var(--dusty-rose); transform: translateY(-3px); }
+  
+  #success-msg { display: none; text-align: center; padding: 140px 24px; min-height: 100vh; }
 </style>
 </head>
 <body>
-
-<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
 
 <div class="site-header">
   <div class="logo">Birthside Creative</div>
 </div>
 
-<!-- WELCOME PAGE -->
-<div id="page-welcome" class="hero">
-  <p class="eyebrow">Creative Partnership</p>
-  <h1>Let's find your<br><em>unique voice.</em></h1>
-  <p style="color:var(--muted-plum); margin-bottom:40px; max-width: 500px;">This intake helps me understand your brand’s heartbeat so we can create something that truly resonates.</p>
-  <button class="btn-primary" onclick="startForm()">Begin Intake</button>
+<div id="full-content">
+  <div class="hero">
+    <span class="eyebrow">Creative Studio</span>
+    <h1>Let's find your<br><em>unique voice.</em></h1>
+    <p style="color:var(--muted-plum); max-width: 550px; line-height: 1.8;">Welcome. This intake is designed to help us dig deep into the heart of your project. Please fill this out in a space where you can reflect and be honest.</p>
+  </div>
+
+  <div class="form-wrapper">
+    <form id="birthside-form">
+      
+      <!-- SECTION 1: IDENTITY -->
+      <div class="section-block">
+        <span class="eyebrow">Section 01</span>
+        <h2 class="section-title" style="margin-bottom: 40px;">The Basics</h2>
+        
+        <div class="field-group">
+          <label>What is your name? *</label>
+          <input type="text" name="Client Name" required placeholder="Sarah Jones">
+        </div>
+
+        <div class="field-group">
+          <label>What is your email address? *</label>
+          <input type="email" name="Email" required placeholder="hello@example.com">
+        </div>
+
+        <div class="field-group">
+          <label>Business or Project Name</label>
+          <input type="text" name="Business Name">
+        </div>
+      </div>
+
+      <!-- SECTION 2: THE VISION (YOUR ORIGINAL CORE QUESTIONS) -->
+      <div class="section-block">
+        <span class="eyebrow">Section 02</span>
+        <h2 class="section-title" style="margin-bottom: 40px;">The Brand Heartbeat</h2>
+
+        <div class="field-group">
+          <label>What is the heartbeat behind what you do?</label>
+          <span class="label-subtext">Why does this project or business exist?</span>
+          <textarea name="Brand Purpose" rows="5" placeholder="Share the 'Why' behind your work..."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Describe your ideal aesthetic in three words.</label>
+          <input type="text" name="Three Words" placeholder="e.g., Raw, Minimal, Nurturing">
+        </div>
+
+        <div class="field-group">
+          <label>Who are we speaking to?</label>
+          <span class="label-subtext">Describe your ideal client or audience.</span>
+          <textarea name="Audience" rows="4"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>What makes your voice unique in your industry?</label>
+          <textarea name="Unique Voice" rows="5"></textarea>
+        </div>
+      </div>
+
+      <!-- SECTION 3: THE PROJECT SCOPE -->
+      <div class="section-block">
+        <span class="eyebrow">Section 03</span>
+        <h2 class="section-title" style="margin-bottom: 40px;">Project Logistics</h2>
+
+        <div class="field-group">
+          <label>What specific services are you interested in?</label>
+          <textarea name="Services Needed" rows="3" placeholder="e.g., Brand Identity, Content Strategy, Web Design..."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>What is your desired timeline for this project?</label>
+          <input type="text" name="Timeline" placeholder="e.g., Next 2 months">
+        </div>
+
+        <div class="field-group">
+          <label>Is there anything else you'd like to share?</label>
+          <span class="label-subtext">Feel free to link to inspirations or tell me about your specific pain points.</span>
+          <textarea name="Additional Info" rows="6"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" data-fs-submit-btn>Submit My Intake</button>
+      </div>
+
+    </form>
+  </div>
 </div>
 
-<!-- SUCCESS PAGE -->
-<div id="success-msg" class="form-container" style="text-align: center; padding-top: 100px; display:none;">
-    <h2 class="section-title" style="font-size: 48px;">Thank you.</h2>
-    <p style="margin-top: 20px; color: var(--muted-plum);">Your vision is in my inbox. I'll review everything and be in touch within 48 hours.</p>
+<div id="success-msg">
+    <h2 class="section-title" style="font-size: 50px; margin-bottom: 20px;">Thank you.</h2>
+    <p style="color: var(--muted-plum); max-width: 500px; margin: 0 auto; line-height: 1.8;">Your vision is now in my inbox. I'll spend some time with your answers and reach out via email within the next 48 hours to discuss our next steps.</p>
 </div>
-
-<!-- FULL FORM -->
-<form id="birthside-form">
-  
-  <!-- SECTION 1: THE BASICS -->
-  <div id="page-1" class="form-container">
-    <span class="eyebrow">Section 01</span>
-    <h2 class="section-title" style="margin-bottom: 40px;">The Fundamentals</h2>
-    
-    <div class="field-group">
-      <label for="name">Your Name *</label>
-      <input type="text" name="Name" required>
-    </div>
-
-    <div class="field-group">
-      <label for="email">Email Address *</label>
-      <input type="email" name="Email" required>
-    </div>
-
-    <div class="field-group">
-      <label for="biz-name">Business or Project Name</label>
-      <input type="text" name="Business Name">
-    </div>
-
-    <button type="button" class="btn-primary" onclick="nextPage(2)">Next: The Vision</button>
-  </div>
-
-  <!-- SECTION 2: THE VISION -->
-  <div id="page-2" class="form-container">
-    <span class="eyebrow">Section 02</span>
-    <h2 class="section-title" style="margin-bottom: 40px;">The Brand Heartbeat</h2>
-
-    <div class="field-group">
-      <label>What is the primary goal of this project?</label>
-      <textarea name="Project Goal" rows="4" placeholder="e.g., A complete rebrand, a new website, social media content strategy..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label>Describe your brand in three words.</label>
-      <input type="text" name="Brand Words" placeholder="e.g., Grounded, Ethereal, Bold">
-    </div>
-
-    <div class="field-group">
-      <label>Who is your ideal audience?</label>
-      <textarea name="Audience" rows="3" placeholder="Who are we speaking to?"></textarea>
-    </div>
-
-    <button type="button" class="btn-primary" onclick="nextPage(3)">Next: Logistics</button>
-  </div>
-
-  <!-- SECTION 3: LOGISTICS -->
-  <div id="page-3" class="form-container">
-    <span class="eyebrow">Section 03</span>
-    <h2 class="section-title" style="margin-bottom: 40px;">Logistics & Details</h2>
-
-    <div class="field-group">
-      <label>What is your ideal timeline for completion?</label>
-      <input type="text" name="Timeline" placeholder="e.g., 4-6 weeks">
-    </div>
-
-    <div class="field-group">
-      <label>Is there anything else I should know?</label>
-      <textarea name="Additional Info" rows="4" placeholder="Any specific requirements or inspirations..."></textarea>
-    </div>
-
-    <button type="submit" class="btn-primary" data-fs-submit-btn>Submit My Intake</button>
-    <div data-fs-error class="error-text"></div>
-  </div>
-
-</form>
 
 <script>
-  let currentStep = 0;
-  const totalSteps = 3;
-
-  function updateProgress(step) {
-    const pct = (step / totalSteps) * 100;
-    document.getElementById('progressBar').style.width = pct + '%';
-  }
-
-  function startForm() {
-    document.getElementById('page-welcome').style.display = 'none';
-    nextPage(1);
-  }
-
-  function nextPage(step) {
-    document.querySelectorAll('.form-container').forEach(p => p.style.display = 'none');
-    document.getElementById('page-' + step).style.display = 'block';
-    window.scrollTo(0,0);
-    updateProgress(step);
-  }
-
-  // Formspree Logic
   window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
   formspree('initForm', { 
     formElement: '#birthside-form', 
-    formId: 'xgodvorr', // Your ID
+    formId: 'xgodvorr',
     onSuccess: function() {
-        document.getElementById('birthside-form').style.display = 'none';
+        document.getElementById('full-content').style.display = 'none';
         document.getElementById('success-msg').style.display = 'block';
-        document.getElementById('progressBar').style.width = '100%';
+        window.scrollTo(0,0);
     }
   });
 </script>
