@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Intake — Birthside Creative</title>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Jost:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mauve-primary: #A67584; 
+    --dusty-rose: #C28E95;
+    --golden-sand: #E8D4A2; 
+    --honey-cream: #F2E9D4; 
+    --warm-cream-bg: #FAF3E8;
+    --off-white-surface: #F9F6F0;
+    --deep-plum: #2C2230;
+    --muted-plum: #6B5B65;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--warm-cream-bg);
+    color: var(--deep-plum);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  h1, h2, .section-title {
+    font-family: 'Yeseva One', serif;
+    font-weight: 400;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--mauve-primary);
+  }
+
+  /* HEADER & PROGRESS */
+  .progress-wrap {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    height: 4px;
+    background: var(--honey-cream);
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--mauve-primary);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  .site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(250, 243, 232, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--golden-sand);
+  }
+
+  .logo {
+    font-family: 'Yeseva One', serif;
+    font-size: 18px;
+    color: var(--deep-plum);
+  }
+
+  /* SECTIONS */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px;
+    background: radial-gradient(circle at center, #FFFDF9 0%, var(--warm-cream-bg) 100%);
+  }
+
+  .hero h1 { font-size: clamp(42px, 8vw, 76px); line-height: 1.1; margin: 20px 0; }
+  .hero h1 em { font-style: italic; color: var(--mauve-primary); font-family: inherit; }
+
+  .form-container { display: none; max-width: 760px; margin: 0 auto; padding: 140px 24px 100px; }
+  .form-container.active { display: block; }
+
+  .field-group { margin-bottom: 30px; position: relative; }
+  
+  label { display: block; margin-bottom: 10px; color: var(--deep-plum); }
+
+  input, textarea {
+    width: 100%;
+    background: var(--off-white-surface);
+    border: 1px solid var(--golden-sand);
+    padding: 16px;
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+  }
+
+  input:focus, textarea:focus { border-color: var(--mauve-primary); background: #FFF; }
+
+  /* BUTTONS */
+  .btn-primary {
+    padding: 18px 44px;
+    background: var(--mauve-primary);
+    color: #FFF;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .btn-primary:hover:not(:disabled) { background: var(--dusty-rose); transform: translateY(-2px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* SUCCESS/ERROR STATES */
+  #success-msg { display: none; text-align: center; padding-top: 100px; }
+  .error-text { color: #842029; font-size: 12px; margin-top: 5px; }
+</style>
+</head>
+<body>
+
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="site-header">
+  <div class="logo">Birthside Creative</div>
+</div>
+
+<!-- WELCOME PAGE -->
+<div id="page-welcome" class="hero">
+  <p class="eyebrow">Creative Studio</p>
+  <h1>Let's find your<br><em>unique voice.</em></h1>
+  <p style="color:var(--muted-plum); margin-bottom:40px; max-width: 500px;">Tell me a little about your vision so we can start building something meaningful together.</p>
+  <button class="btn-primary" onclick="startForm()">Begin Intake</button>
+</div>
+
+<!-- SUCCESS PAGE -->
+<div id="success-msg" class="form-container">
+    <h2 class="section-title" style="font-size: 48px;">Thank you.</h2>
+    <p style="margin-top: 20px; color: var(--muted-plum);">Your details have been sent to Birthside Creative. I'll review your vision and reach out via email shortly.</p>
+</div>
+
+<!-- THE FORM -->
+<form id="birthside-form">
+  <div id="page-1" class="form-container">
+    <span class="eyebrow">Section 01</span>
+    <h2 class="section-title" style="margin-bottom: 40px;">The Fundamentals</h2>
+
+    <div class="field-group">
+      <label class="eyebrow" for="full-name">Full Name *</label>
+      <input type="text" id="full-name" name="name" data-fs-field required>
+      <span data-fs-error="name" class="error-text"></span>
+    </div>
+
+    <div class="field-group">
+      <label class="eyebrow" for="email">Email Address *</label>
+      <input type="email" id="email" name="email" data-fs-field required>
+      <span data-fs-error="email" class="error-text"></span>
+    </div>
+
+    <div class="field-group">
+      <label class="eyebrow" for="vision">Your Creative Vision</label>
+      <textarea id="vision" name="vision" rows="5" data-fs-field placeholder="Describe the heart of your project..."></textarea>
+      <span data-fs-error="vision" class="error-text"></span>
+    </div>
+
+    <button type="submit" class="btn-primary" data-fs-submit-btn>Submit Intake</button>
+    <div data-fs-error class="error-text" style="margin-top: 15px;"></div>
+  </div>
+</form>
+
+<script>
+  // Navigation Logic
+  function startForm() {
+    document.getElementById('page-welcome').style.display = 'none';
+    document.getElementById('page-1').classList.add('active');
+    document.getElementById('progressBar').style.width = '50%';
+  }
+
+  // Formspree Integration
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  
+  formspree('initForm', { 
+    formElement: '#birthside-form', 
+    formId: 'xgodvorr',
+    onSuccess: function() {
+        document.getElementById('page-1').style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+        document.getElementById('progressBar').style.width = '100%';
+    }
+  });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+</body>
+</html>
